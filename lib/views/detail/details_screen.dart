@@ -1,17 +1,24 @@
-import 'package:ecommerce_app/routes/app_pages.dart';
-import 'package:ecommerce_app/utils/helper/button.dart';
-import 'package:ecommerce_app/utils/image_constants.dart';
+// ignore: unused_import
+import 'package:oxyboots/routes/app_pages.dart';
+import 'package:oxyboots/utils/helper/button.dart';
+import 'package:oxyboots/utils/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../controller/dashboard_controller.dart';
+import '../../controller/favoritecontroller.dart';
 import '../../model/home_model/brand_model.dart';
 import '../../utils/Appcolor/app_theme.dart';
 import '../../utils/helper/appbar.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
+  DetailsScreen({super.key});
+  //final CartController checkoutController = Get.put(CartController());
+  final CheckoutController checkoutController = Get.put(CheckoutController());
+
+  final CurrencyFormatter currencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +29,7 @@ class DetailsScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 18.h),
           decoration: BoxDecoration(
             color: theme.scaffoldBackgroundColor,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 15,
@@ -42,14 +49,23 @@ class DetailsScreen extends StatelessWidget {
                     style: theme.textTheme.labelSmall,
                   ),
                   SizedBox(height: 4.h),
-                  Text('\$849.69', style: theme.textTheme.displayMedium),
+                  Text(currencyController.formatPrice(double.parse('8469')),
+                      style: theme.textTheme.displayMedium),
                 ],
               ),
-              CustomButton(
-                  name: 'Add To Cart',
-                  onPressButton: () => Get.toNamed(AppRoutes.myCardScreen),
-                  width: 160,
-                  height: 50)
+              Obx(() {
+                bool isTab = checkoutController.isFirstClick.value;
+                return CustomButton(
+                    name: isTab ? "Add to Cart" : "Go to Cart",
+                    color: isTab ? theme.primaryColor : AppTheme.dark,
+                    // onPressButton: () => Get.toNamed(AppRoutes.myCardScreen),
+                    onPressButton: () {
+                      checkoutController.addToCart(data);
+                      Get.toNamed(AppRoutes.myCardScreen);
+                    },
+                    width: 160,
+                    height: 50);
+              })
             ],
           ),
         ),
@@ -60,18 +76,34 @@ class DetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-                child: CustomAppbar(
-                  text: 'Product Details',
-                  isTabtext: false,
-                  imageIcon: ImageConstants.like,
-                  isTabicon: true,
-                ),
-              ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
+                  child: Obx(
+                    () => Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        CustomAppbar(
+                          text: 'Product Details',
+                          isTabtext: false,
+                          imageIcon: ImageConstants.myCard,
+                          isTabicon: true,
+                        ),
+                        CircleAvatar(
+                          backgroundColor: AppTheme.warning,
+                          radius: 8.r,
+                          child: Text(
+                            checkoutController.currentIndex.toString(),
+                            style: TextStyle(
+                                fontSize: 10.sp, color: AppTheme.info),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
               Container(
                   height: 230.h,
                   width: double.infinity,
-                  padding: EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(18),
                   color: theme.scaffoldBackgroundColor,
                   child: Center(
                       child: Image.asset(
@@ -97,7 +129,11 @@ class DetailsScreen extends StatelessWidget {
                         data.title,
                         style: theme.textTheme.displayLarge,
                       ),
-                      Text(data.price, style: theme.textTheme.displayMedium),
+                      Text(
+                        currencyController
+                            .formatPrice(double.parse(data.price)),
+                        style: theme.textTheme.displayMedium,
+                      ),
                       Text(
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
@@ -118,7 +154,7 @@ class DetailsScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text('Size', style: theme.textTheme.headlineSmall),
-                          Spacer(),
+                          const Spacer(),
                           Row(
                             spacing: 10,
                             children: [
@@ -156,9 +192,9 @@ class DetailsScreen extends StatelessWidget {
         Container(
           width: 35.w,
           height: 35.h,
-          decoration:
-              BoxDecoration(color: AppTheme.background, shape: BoxShape.circle),
-          child: Center(child: Text('12')),
+          decoration: const BoxDecoration(
+              color: AppTheme.background, shape: BoxShape.circle),
+          child: const Center(child: Text('12')),
         ),
         SizedBox(width: 10.w)
       ],
@@ -171,7 +207,7 @@ class DetailsScreen extends StatelessWidget {
         Container(
             height: 50.h,
             width: 50.w,
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 color: AppTheme.background,
                 borderRadius: BorderRadius.circular(8.r)),

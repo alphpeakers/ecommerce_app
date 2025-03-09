@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/routes/app_pages.dart';
+import 'package:oxyboots/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +14,7 @@ class OnboardingController extends GetxController {
     } else {
       pageController.nextPage(
           duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInCirc);
+          curve: Curves.easeOutSine);
     }
   }
 

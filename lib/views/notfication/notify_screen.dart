@@ -1,5 +1,5 @@
-import 'package:ecommerce_app/utils/Appcolor/app_theme.dart';
-import 'package:ecommerce_app/utils/helper/appbar.dart';
+import 'package:oxyboots/utils/Appcolor/app_theme.dart';
+import 'package:oxyboots/utils/helper/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,37 +15,44 @@ class NotifyScreen extends StatelessWidget {
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
           child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomAppbar(
-                onTab: () {},
-                onTabtext: 'Clear All',
-                text: 'Notifications',
-                isTabtext: true,
-                isTabicon: false,
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppbar(
+              onTab: () {},
+              onTabtext: 'Clear All',
+              isMenu: false,
+              text2: 'Notification',
+              isTabicon: false,
+            ),
+            Expanded(
+              
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 20.h),
+                    Text('Today', style: theme.textTheme.headlineSmall),
+                    notficationContent(theme),
+                    SizedBox(height: 20.h),
+                    Text('YesterDay', style: theme.textTheme.headlineSmall),
+                    notficationContent(theme),
+                  ],
+                ),
               ),
-              SizedBox(height: 20.h),
-              Text('Today', style: theme.textTheme.headlineSmall),
-              newMethod(theme),
-              SizedBox(height: 20.h),
-              Text('YesterDay', style: theme.textTheme.headlineSmall),
-              newMethod(theme),
-            ],
-          ),
+            ),
+          ],
         ),
       )),
     );
   }
 
-  Widget newMethod(ThemeData theme) {
+  Widget notficationContent(ThemeData theme) {
     return SizedBox(
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: PopularCardModel.listItem.length,
           itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -55,7 +62,7 @@ class NotifyScreen extends StatelessWidget {
                     Container(
                       height: 80.h,
                       width: 80.w,
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: AppTheme.white,
                           borderRadius: BorderRadius.circular(10.r)),
@@ -72,7 +79,7 @@ class NotifyScreen extends StatelessWidget {
                         SizedBox(
                           width: 130.w,
                           height: 35.h,
-                          child: Text(
+                          child: const Text(
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               'We have new\nProucts with offers'),
@@ -80,10 +87,10 @@ class NotifyScreen extends StatelessWidget {
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text('35893'),
+                        const Text('35893'),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       spacing: 10,

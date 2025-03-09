@@ -1,4 +1,4 @@
-name: ecommerce_app
+name: oxyboots
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -42,6 +42,9 @@ dependencies:
   dotted_line: ^3.2.3
   intl_phone_field: ^3.2.0
   pinput: ^5.0.1
+  intl: ^0.18.0
+  lottie: ^3.3.1
+  animate_do: ^4.2.0
 
 dev_dependencies:
   flutter_test:
@@ -72,7 +75,12 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-Bold.ttf
         - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
         - asset: assets/fonts/Poppins/Poppins-Light.ttf
-        
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto\Roboto-Regular.ttf
+    - family: Cinzel
+      fonts:
+        - asset: assets/fonts/Cinzel/CinzelDecorative-Regular.ttf
 
 
   # To add assets to your application, add an assets section, like this:

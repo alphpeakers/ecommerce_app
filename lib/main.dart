@@ -1,9 +1,8 @@
-import 'package:ecommerce_app/routes/app_pages.dart';
-import 'package:ecommerce_app/utils/Appcolor/app_theme.dart';
+import 'package:oxyboots/routes/app_pages.dart';
+import 'package:oxyboots/utils/Appcolor/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'views/home/home_screen.dart';
 
 //
 void main() {
@@ -22,11 +21,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           getPages: AppRoutes.routes,
-          initialRoute: AppRoutes.onboardingScreen,
+          initialRoute: AppRoutes.splashScreen,
           theme: AppTheme.lightTheme,
           debugShowCheckedModeBanner: false,
-          title: 'Shop Template by The Flutter Way',
-          home: HomeScreen(),
         );
       },
     );

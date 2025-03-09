@@ -38,12 +38,12 @@ class CustomBottomSheetContent extends StatelessWidget {
           ),
           Row(
             children: [
-              Spacer(),
+              const Spacer(),
               Text('Filters', style: theme.textTheme.displayLarge),
               SizedBox(
                 width: 100.w,
               ),
-              Text('Reset')
+              const Text('Reset')
             ],
           ),
           Text('Gender', style: theme.textTheme.headlineSmall),
@@ -128,7 +128,7 @@ class CustomBottomSheetContent extends StatelessWidget {
             decoration: BoxDecoration(
                 color: theme.primaryColor,
                 borderRadius: BorderRadius.circular(30.r)),
-            child: Center(child: Text('Apply')),
+            child: const Center(child: Text('Apply')),
           )
         ],
       ),

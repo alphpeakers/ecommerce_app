@@ -1,24 +1,28 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../../controller/dashboard_controller.dart';
 import '../../../utils/Appcolor/app_theme.dart';
 import '../../../utils/helper/button.dart';
-import 'Dialog_box.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet({
-    super.key,
-    required this.theme,
-  });
+  final String buttonText;
+  final void Function() onPress;
+  final CurrencyFormatter currencyController = Get.find();
 
-  final ThemeData theme;
+  CustomBottomSheet({
+    super.key, required this.buttonText, required this.onPress,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-      decoration: BoxDecoration(color: AppTheme.white),
+      decoration: const BoxDecoration(color: AppTheme.white),
       height: 250.h,
       child: Column(
         spacing: 18,
@@ -28,7 +32,7 @@ class CustomBottomSheet extends StatelessWidget {
             children: [
               Text('SubTotal', style: theme.textTheme.labelLarge),
               Text(
-                '1250.00',
+                currencyController.formatPrice(double.parse('4251')),
                 style: theme.textTheme.headlineSmall,
               ),
             ],
@@ -36,14 +40,14 @@ class CustomBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('SubTotal', style: theme.textTheme.labelLarge),
+              Text('Delivery Charge', style: theme.textTheme.labelLarge),
               Text(
-                '10.00',
+                currencyController.formatPrice(double.parse('20')),
                 style: theme.textTheme.headlineSmall,
               ),
             ],
           ),
-          DottedLine(
+          const DottedLine(
             lineThickness: 1.1,
             dashColor: AppTheme.lightGrey,
           ),
@@ -52,16 +56,17 @@ class CustomBottomSheet extends StatelessWidget {
             children: [
               Text('Total Cost', style: theme.textTheme.headlineSmall),
               Text(
-                '1250.00',
-                style: theme.textTheme.displayLarge,
-              ),
+                    currencyController.formatPrice(double.parse('12500')),
+                    style: theme.textTheme.displayMedium,
+                  ),
             ],
           ),
           CustomButton(
             width: double.infinity,
             height: 55,
-            name: 'Payment',
-            onPressButton: () => showPaymentSuccessDialog(context),
+            color: theme.primaryColor,
+            name: buttonText,
+            onPressButton: onPress,
           )
         ],
       ),

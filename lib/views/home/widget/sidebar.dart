@@ -1,15 +1,18 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:awesome_drawer_bar/awesome_drawer_bar.dart';
-import 'package:ecommerce_app/utils/Appcolor/app_theme.dart';
-import 'package:ecommerce_app/utils/helper/inkwel.dart';
-import 'package:ecommerce_app/utils/image_constants.dart';
+import 'package:oxyboots/routes/app_pages.dart';
+import 'package:oxyboots/utils/Appcolor/app_theme.dart';
+import 'package:oxyboots/utils/helper/inkwel.dart';
+import 'package:oxyboots/utils/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../controller/homecontroller.dart';
 import '../../../model/home_model/sidebar_model.dart';
+import '../../../utils/helper/button.dart';
 
-final DrawerControllerX drawerController = Get.put(DrawerControllerX());
+// final DrawerControllerX drawerController = Get.put(DrawerControllerX());
 
 class Sidebar extends StatelessWidget {
   final Widget child;
@@ -20,8 +23,8 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AwesomeDrawerBar(
       type: StyleState.scaleRotate,
-      controller: drawerController.drawerController,
-      menuScreen: MenuScreen(),
+      controller: Get.find<DrawerControllerX>().drawerController,
+      menuScreen: const MenuScreen(),
       mainScreen: child,
       borderRadius: 28.0,
       showShadow: true,
@@ -36,10 +39,17 @@ class Sidebar extends StatelessWidget {
   }
 }
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
+
   const MenuScreen({super.key});
 
   @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  @override
+
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
@@ -52,7 +62,7 @@ class MenuScreen extends StatelessWidget {
               spacing: 7,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 35,
                 ),
                 Text('Hey, 👋', style: theme.textTheme.labelSmall),
@@ -69,7 +79,7 @@ class MenuScreen extends StatelessWidget {
                     return CustomInkTap(
                       onPress: () => Get.toNamed(listData.routeName),
                       child: ListTile(
-                        contentPadding: EdgeInsets.only(right: 20),
+                        contentPadding: const EdgeInsets.only(right: 20),
                         title: Text(listData.title,
                             style: theme.textTheme.titleSmall),
                         leading: SvgPicture.asset(
@@ -85,7 +95,7 @@ class MenuScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   width: 150.w,
-                  child: Divider(
+                  child: const Divider(
                     color: AppTheme.grey,
                   ),
                 ),
@@ -93,7 +103,10 @@ class MenuScreen extends StatelessWidget {
                   height: 10.h,
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(right: 20),
+                  onTap: () {
+                    dialogLogout(theme);
+                  },
+                  contentPadding: const EdgeInsets.only(right: 20),
                   title: Text('Sign Out', style: theme.textTheme.titleSmall),
                   leading: SvgPicture.asset(ImageConstants.signOut),
                 )
@@ -102,4 +115,67 @@ class MenuScreen extends StatelessWidget {
           ),
         ));
   }
+
+  Future<dynamic> dialogLogout(ThemeData theme) {
+    return Get.dialog(
+                    barrierDismissible: false,
+                    Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(15.r), // Rounded corners
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        width: 250, // Set custom width
+                        height: 130, // Set custom height
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 10,
+                          children: [
+                            FadeInDown(
+                              duration: const Duration(milliseconds: 200),
+                              child: Text(
+                                'Are you sure you want \nto Log out?',
+                                textAlign: TextAlign.center,
+                                style: theme.textTheme.headlineSmall,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                              children: [
+                                FadeInUp(
+                                    duration:
+                                        const Duration(milliseconds: 200),
+                                    child: CustomButton(
+                                      name: 'Cancel',
+                                      onPressButton: () => Get.back(),
+                                      width: 80,
+                                      height: 30,
+                                      color: AppTheme.grey,
+                                    )),
+                                FadeInUp(
+                                  duration: const Duration(milliseconds: 200),
+                                  child: CustomButton(
+                                    name: 'Log out',
+                                    onPressButton: () => Get.offAllNamed(
+                                        AppRoutes.phoneAuthScreen),
+                                    width: 80,
+                                    height: 30,
+                                    color: AppTheme.dark,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+  }
+  
 }

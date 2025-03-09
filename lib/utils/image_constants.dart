@@ -8,6 +8,7 @@ class ImageConstants {
   static const shoe3 = 'assets/images/28530-3-nike-shoes-transparent.png';
   static const arrowForward = 'assets/icons/back (1).png';
   static const loginImage = 'assets/images/Onboarding.png';
+  static const splashImage = 'assets/images/Onboard-1.png';
   //icons
   static const menu = 'assets/icons/Group 26.svg';
   static const location = 'assets/icons/combo shape.svg';
@@ -33,6 +34,8 @@ class ImageConstants {
   static const arrowdown = 'assets/icons/Vector 175.svg';
   static const edit = 'assets/icons/Vector.svg';
   static const email = 'assets/icons/email.svg';
-  static const success = 'assets/icons/Frame 273.svg';
+  static const success = 'assets/icons/image 50.svg';
   static const google = 'assets/icons/icons8-google-logo (1).svg';
-}
+  static const about = 'assets/icons/Line.svg';
+  static const messagelite = 'assets/icons/Message_light.svg';
+}   

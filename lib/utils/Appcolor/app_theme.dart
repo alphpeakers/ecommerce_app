@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const fontfamil = 'Poppins';
+const fontfamil2 = 'Roboto';
 
 class AppTheme {
   static const Color primary = Color(0xFF5B9EE1);
@@ -16,7 +17,7 @@ class AppTheme {
     brightness: Brightness.light,
     primaryColor: primary,
     scaffoldBackgroundColor: background,
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       headlineMedium:
           TextStyle(fontSize: 24.0, fontWeight: FontWeight.w400, color: grey),
       headlineLarge: TextStyle(
@@ -27,7 +28,7 @@ class AppTheme {
       headlineSmall: TextStyle(
           color: secondary,
           fontSize: 18.0,
-          fontFamily: fontfamil,
+          fontFamily: fontfamil2,
           fontWeight: FontWeight.w600),
       titleSmall: TextStyle(
         color: white,
@@ -46,7 +47,7 @@ class AppTheme {
         color: secondary,
       ),
       displayMedium: TextStyle(
-        fontFamily: fontfamil,
+        fontFamily: fontfamil2,
         fontSize: 22.0,
         fontWeight: FontWeight.w600,
         color: secondary,
@@ -64,7 +65,7 @@ class AppTheme {
         color: Colors.black87,
       ),
       bodyMedium: TextStyle(
-        fontFamily: fontfamil,
+        fontFamily: fontfamil2,
         fontSize: 14.0,
         fontWeight: FontWeight.w600,
         color: secondary,

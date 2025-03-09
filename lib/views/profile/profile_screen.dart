@@ -1,13 +1,31 @@
-import 'package:ecommerce_app/utils/helper/button.dart';
-import 'package:ecommerce_app/utils/image_constants.dart';
+import 'package:oxyboots/utils/helper/button.dart';
+import 'package:oxyboots/utils/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-import '../../utils/Appcolor/app_theme.dart';
 import '../../utils/helper/appbar.dart';
+import '../auth/widget/texfield.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  RxBool isTab = true.obs;
+
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController phoneController = TextEditingController();
+
+  final TextEditingController addressController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,89 +35,107 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: theme.scaffoldBackgroundColor,
         body: SafeArea(
             child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-                child: SingleChildScrollView(
-                    child: Column(
-                        spacing: 10,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+                child: Column(
+                    spacing: 10,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       CustomAppbar(
-                        text: 'Profile',
                         isTabtext: false,
                         isTabicon: true,
+                        onTabtext: 'Clear All',
+                        isMenu: false,
+                        text2: 'Profile',
+                        onTabimage: () {
+                          isTab.value = false;
+                        },
                         imageIcon: ImageConstants.edit,
                       ),
-                      SizedBox(height: 15.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            spacing: 5,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 50,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 15.h),
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Allison Becker'),
+                                ],
+                              ),
+                              Text('Full Name',
+                                  style: theme.textTheme.headlineSmall),
+                              Obx(() => TexField(
+                                    controller: nameController,
+                                    readOnly: isTab.value,
+                                    keyboardType: TextInputType.name,
+                                    isTrue: false,
+                                    hintText: 'Enter your name',
+                                  )),
+                              SizedBox(height: 10.h),
+                              Text('Email Address',
+                                  style: theme.textTheme.headlineSmall),
+                              Obx(() => TexField(
+                                    readOnly: isTab.value,
+                                    controller: emailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    isTrue: false,
+                                    hintText: 'Enter your Email Address',
+                                  )),
+                              SizedBox(height: 10.h),
+                              Text('Phone No',
+                                  style: theme.textTheme.headlineSmall),
+                              Obx(() => TexField(
+                                    readOnly: isTab.value,
+                                    controller: phoneController,
+                                    keyboardType: TextInputType.phone,
+                                    isTrue: false,
+                                    hintText: 'Enter your Phone No',
+                                  )),
+                              SizedBox(height: 10.h),
+                              Text('Address',
+                                  style: theme.textTheme.headlineSmall),
+                              Obx(() => TexField(
+                                    readOnly: isTab.value,
+                                    controller: addressController,
+                                    keyboardType: TextInputType.streetAddress,
+                                    isTrue: false,
+                                    hintText: 'Enter your Address',
+                                  )),
+                              SizedBox(height: 10.h),
+                              Text('Password',
+                                  style: theme.textTheme.headlineSmall),
+                              Obx(() => TexField(
+                                    readOnly: isTab.value,
+                                    controller: passwordController,
+                                    keyboardType: TextInputType.visiblePassword,
+                                    isTrue: false,
+                                    hintText: 'Enter your Password',
+                                  )),
+                              SizedBox(height: 25.h),
+                              CustomButton(
+                                name: 'Save',
+                                color: theme.primaryColor,
+                                onPressButton: () {
+                                  isTab.value = true;
+                                  Get.back();
+                                },
+                                width: double.infinity,
+                                height: 55,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Allison Becker'),
-                        ],
-                      ),
-                      Text(
-                        'Full Name',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      newMethod(context),
-                      Text(
-                        'Email Address',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      newMethod(context),
-                      Text(
-                        'Phone No',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      newMethod(context),
-                      Text(
-                        'Address',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      newMethod(context),
-                      Text(
-                        'Password',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      newMethod(context),
-                      SizedBox(height: 25.h),
-                      CustomButton(
-                        name: 'Save',
-                        onPressButton: () {},
-                        width: double.infinity,
-                        height: 55,
-                      )
-                    ])))));
-  }
-
-  Widget newMethod(BuildContext context) {
-    return Container(
-      height: 50.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppTheme.white,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: TextField(
-        readOnly: true,
-        //  controller: searchController,
-        onSubmitted: (value) => FocusScope.of(context).unfocus(),
-        autocorrect: true,
-        decoration: InputDecoration(
-          hintText: "Allison Becker",
-          hintStyle: Theme.of(context).textTheme.labelSmall,
-          border: InputBorder.none,
-          contentPadding:
-              EdgeInsets.symmetric(vertical: 15.h, horizontal: 16.w),
-        ),
-      ),
-    );
+                    ]))));
   }
 }

@@ -1,6 +1,5 @@
-import 'package:ecommerce_app/utils/Appcolor/app_theme.dart';
-import 'package:ecommerce_app/utils/helper/inkwel.dart';
-import 'package:ecommerce_app/utils/image_constants.dart';
+import 'package:oxyboots/utils/helper/inkwel.dart';
+import 'package:oxyboots/utils/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +10,7 @@ class CustomButton extends StatelessWidget {
   final double height;
   final String? image;
   final bool isImage;
+  final Color? color;
   final void Function() onPressButton;
   const CustomButton(
       {super.key,
@@ -19,7 +19,8 @@ class CustomButton extends StatelessWidget {
       required this.width,
       required this.height,
       this.image,
-      this.isImage = false});
+      this.isImage = false,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +32,15 @@ class CustomButton extends StatelessWidget {
         height: height.h,
         width: width.w,
         decoration: BoxDecoration(
-            color: isImage ? AppTheme.info : theme.primaryColor,
-            borderRadius: BorderRadius.circular(10.r)),
+            color: color, borderRadius: BorderRadius.circular(10.r)),
         child: Center(
             child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isImage ? SvgPicture.asset(ImageConstants.google) : SizedBox(),
-            SizedBox(width: 5),
+            isImage
+                ? SvgPicture.asset(ImageConstants.google)
+                : const SizedBox(),
+            const SizedBox(width: 5),
             Text(name, style: theme.textTheme.labelMedium),
           ],
         )),

@@ -1,15 +1,19 @@
-import 'package:ecommerce_app/model/home_model/brand_model.dart';
-import 'package:ecommerce_app/routes/app_pages.dart';
-import 'package:ecommerce_app/utils/helper/inkwel.dart';
+import 'package:oxyboots/model/home_model/brand_model.dart';
+import 'package:oxyboots/routes/app_pages.dart';
+import 'package:oxyboots/utils/helper/inkwel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../../controller/dashboard_controller.dart';
+import '../../../controller/favoritecontroller.dart';
 import '../../../utils/Appcolor/app_theme.dart';
 import '../../../utils/image_constants.dart';
 
 class PopularCard extends StatelessWidget {
-  const PopularCard({
+  final FavoriteController favoriteController = Get.put(FavoriteController());
+  final CurrencyFormatter currencyController = Get.put(CurrencyFormatter());
+  PopularCard({
     super.key,
   });
 
@@ -40,7 +44,8 @@ class PopularCard extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     children: [
                       CustomInkTap(
-                        onPress: () => Get.toNamed((AppRoutes.detailsScreen),arguments: data),
+                        onPress: () => Get.toNamed((AppRoutes.detailsScreen),
+                            arguments: data),
                         child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 13.h),
@@ -61,22 +66,42 @@ class PopularCard extends StatelessWidget {
                                 ),
                                 Text(data.name,
                                     style: theme.textTheme.bodySmall),
-                                Text(
-                                  data.title,
-                                  style: theme.textTheme.headlineSmall,
+                                SizedBox(
+                                  width: 100.w,
+                                  child: Text(
+                                    data.title,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.textTheme.headlineSmall,
+                                  ),
                                 ),
                                 Text(
-                                  data.price,
-                                  style: theme.textTheme.bodyMedium,
-                                )
+                                  currencyController
+                                      .formatPrice(double.parse(data.price)),
+                                  style: const TextStyle(fontFamily: 'Roboto'),
+                                ),
                               ],
                             )),
                       ),
                       Positioned(
                           left: 10,
                           top: 10,
-                          child: InkWell(
-                              child: SvgPicture.asset(ImageConstants.like)))
+                          child: Obx(() {
+                            bool isFav = favoriteController.isfavourite(data);
+                            return CustomInkTap(
+                                onPress: () {
+                                  if (isFav) {
+                                    favoriteController
+                                        .removeFromFavorites(data);
+                                  } else {
+                                    favoriteController.addTofavourite(data);
+                                  }
+                                },
+                                child: SvgPicture.asset(
+                                  ImageConstants.like,
+                                  color:
+                                      isFav ? AppTheme.warning : AppTheme.info,
+                                ));
+                          }))
                     ],
                   );
                 },
@@ -110,7 +135,7 @@ class PopularCard extends StatelessWidget {
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    '300',
+                    currencyController.formatPrice(double.parse('2085')),
                     style: theme.textTheme.bodyMedium,
                   ),
                 ],

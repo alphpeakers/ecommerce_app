@@ -10,7 +10,7 @@ class TabBarController extends GetxController {
   void changeTab(int index) {
     currentPage.value = index;
     pageController.animateToPage(index,
-        duration: Duration(milliseconds: 200), curve: Curves.ease);
+        duration: const Duration(milliseconds: 200), curve: Curves.ease);
   }
 
   @override
@@ -28,13 +28,9 @@ class TabBarController extends GetxController {
 
 //drawer
 class DrawerControllerX extends GetxController {
-  late final AwesomeDrawerBarController drawerController;
+   final AwesomeDrawerBarController drawerController = AwesomeDrawerBarController();
   RxInt currentPage = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-    drawerController = AwesomeDrawerBarController();
-  }
+  
 
   void toggleDrawer() {
     drawerController.toggle!();
@@ -43,9 +39,5 @@ class DrawerControllerX extends GetxController {
     currentPage.value = index;
     currentPage.value != currentPage.value;
   }
-  @override
-  void onClose() {
-   drawerController.close;
-    super.onClose();
-  }
+
 }

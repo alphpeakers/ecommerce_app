@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/utils/image_constants.dart';
+import 'package:oxyboots/utils/image_constants.dart';
 
 class OnboardContentModel {
   String title;
@@ -10,7 +10,7 @@ class OnboardContentModel {
       required this.description,
       required this.name,
       required this.image});
-  static List <OnboardContentModel>onboardList = [
+  static List<OnboardContentModel> onboardList = [
     OnboardContentModel(
         title: 'Start Journey With Nike',
         description: 'Smart, Gorgeous & Fashionable Collection',

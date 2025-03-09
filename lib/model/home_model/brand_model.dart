@@ -6,11 +6,13 @@ class PopularCardModel {
   String price;
   String? description;
   String image;
+  int quantity;
   PopularCardModel(
       {required this.name,
       required this.title,
       this.description,
       required this.image,
+       this.quantity = 1,
       required this.price});
   static List<PopularCardModel> listItem = [
     PopularCardModel(
