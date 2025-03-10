@@ -1,15 +1,19 @@
-# oxyboots A Ecommerce project.
-![Image](https://github.com/user-attachments/assets/14747191-c2ce-4f76-bb8a-a613c74572f4)
+# Oxyboots - An E-commerce Project
+![Image](https://github.com/user-attachments/assets/f53dc1ac-15b3-4679-b46b-f9cb7bb9bb8e)
 
-## Getting Started
+## Description:
+- A modern and stylish e-commerce application for buying shoes. 
+- It features a sleek UI, authentication, product catalog, cart, and checkout process.
+## Features
+- Onboarding screens with smooth UI
+- User authentication (Login/Signup with Google)
+- Product listing and detailed view
+- Add to cart and checkout functionality
+- User profile management
+- Favorites section for saving products
+- Notifications and search functionality
+- Dark mode and sidebar navigation
+## Tech Stack
+- **Frontend:** Flutter (Dart)  
+- **State Management:** GetX  
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
