@@ -6,23 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
-import '../../controller/dashboard_controller.dart';
-import '../../controller/favoritecontroller.dart';
-import '../../model/home_model/brand_model.dart';
+import '../../controller/product_controller.dart';
 import '../../utils/Appcolor/app_theme.dart';
 import '../../utils/helper/appbar.dart';
 
 class DetailsScreen extends StatelessWidget {
   DetailsScreen({super.key});
-  //final CartController checkoutController = Get.put(CartController());
-  final CheckoutController checkoutController = Get.put(CheckoutController());
 
-  final CurrencyFormatter currencyController = Get.find();
+  final CheckoutController checkoutController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final PopularCardModel data = Get.arguments;
+    // final PopularCardModel data = Get.arguments;
+    final arguments = Get.arguments as Map;
+    final data = arguments["data"];
+    final tag = arguments["tag"];
     final theme = Theme.of(context);
     return Scaffold(
         bottomSheet: Container(
@@ -49,7 +47,7 @@ class DetailsScreen extends StatelessWidget {
                     style: theme.textTheme.labelSmall,
                   ),
                   SizedBox(height: 4.h),
-                  Text(currencyController.formatPrice(double.parse('8469')),
+                  Text(checkoutController.formatPrice(double.parse('8469')),
                       style: theme.textTheme.displayMedium),
                 ],
               ),
@@ -100,15 +98,18 @@ class DetailsScreen extends StatelessWidget {
                       ],
                     ),
                   )),
-              Container(
-                  height: 230.h,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(18),
-                  color: theme.scaffoldBackgroundColor,
-                  child: Center(
-                      child: Image.asset(
-                    data.image,
-                  ))),
+              Hero(
+                tag: tag,
+                child: Container(
+                    height: 230.h,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(18),
+                    color: theme.scaffoldBackgroundColor,
+                    child: Center(
+                        child: Image.asset(
+                      data.image,
+                    ))),
+              ),
               SizedBox(height: 20.h),
               Container(
                 width: double.infinity,
@@ -130,7 +131,7 @@ class DetailsScreen extends StatelessWidget {
                         style: theme.textTheme.displayLarge,
                       ),
                       Text(
-                        currencyController
+                        checkoutController
                             .formatPrice(double.parse(data.price)),
                         style: theme.textTheme.displayMedium,
                       ),

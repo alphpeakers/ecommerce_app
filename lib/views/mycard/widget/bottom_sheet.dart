@@ -2,6 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:oxyboots/controller/product_controller.dart';
 
 import '../../../controller/dashboard_controller.dart';
 import '../../../utils/Appcolor/app_theme.dart';
@@ -10,7 +11,7 @@ import '../../../utils/helper/button.dart';
 class CustomBottomSheet extends StatelessWidget {
   final String buttonText;
   final void Function() onPress;
-  final CurrencyFormatter currencyController = Get.find();
+  final CheckoutController currencyController = Get.find();
 
   CustomBottomSheet({
     super.key, required this.buttonText, required this.onPress,

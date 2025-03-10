@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import '../../controller/dashboard_controller.dart';
-import '../../controller/favoritecontroller.dart';
+import '../../controller/favourite_controller.dart';
+import '../../controller/product_controller.dart';
 import '../../utils/Appcolor/app_theme.dart';
 import '../../utils/helper/appbar.dart';
 import '../../utils/image_constants.dart';
 
 class FavouriteScreen extends StatelessWidget {
   final FavoriteController favoriteController = Get.find();
-  final CurrencyFormatter currencyController = Get.find();
+  final CheckoutController currencyController = Get.find();
   FavouriteScreen({super.key});
 
   @override

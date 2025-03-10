@@ -1,4 +1,4 @@
-import 'package:oxyboots/controller/login_controller.dart';
+import 'package:oxyboots/controller/auth_controller.dart';
 import 'package:oxyboots/routes/app_pages.dart';
 import 'package:oxyboots/utils/helper/button.dart';
 import 'package:oxyboots/utils/helper/inkwel.dart';
@@ -14,7 +14,7 @@ import 'widget/texfield.dart';
 
 class PhoneAuthScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final LoginController authController = Get.put(LoginController());
+  final AuthController authController = Get.find();
   PhoneAuthScreen({super.key});
 
   @override
@@ -23,21 +23,20 @@ class PhoneAuthScreen extends StatelessWidget {
 
     final theme = Theme.of(context);
     return Scaffold(
-      // extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   toolbarHeight: 0,
-      // ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage(
               ImageConstants.loginImage,
-              fit: BoxFit.cover,
             ),
-          ),
-          Padding(
+            fit: BoxFit.cover,
+          )),
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -107,8 +106,6 @@ class PhoneAuthScreen extends StatelessWidget {
               ],
             ),
           ),
-        ],
-      ),
-    );
+        ));
   }
 }

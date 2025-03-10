@@ -1,5 +1,5 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:oxyboots/controller/homecontroller.dart';
+import 'package:flutter/gestures.dart';
+import 'package:oxyboots/controller/dashboard_controller.dart';
 import 'package:oxyboots/routes/app_pages.dart';
 import 'package:oxyboots/utils/Appcolor/app_theme.dart';
 import 'package:oxyboots/utils/helper/inkwel.dart';
@@ -9,15 +9,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../controller/product_controller.dart';
 import '../../model/home_model/tabbar_model.dart';
 import 'widget/bottom_sheet.dart';
-import 'widget/brand_product.dart';
+import 'widget/popular_shoes.dart';
 import 'widget/sidebar.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final TabBarController tabBarController = Get.put(TabBarController());
-  final DrawerControllerX drawerController = Get.put(DrawerControllerX());
+  final DashboardController dashboardController = Get.find();
+  final CheckoutController checkoutController = Get.find();
+
   final List items = [
     PopularCard(),
     const PumaBrand(),
@@ -50,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                       splashColor: Colors.transparent,
                       enableFeedback: false,
                       highlightColor: Colors.transparent,
-                      onTap: () => drawerController.toggleDrawer(),
+                      onTap: () => dashboardController.toggleDrawer(),
                       child: Container(
                           height: 45.h,
                           width: 45.w,
@@ -76,19 +78,22 @@ class HomeScreen extends StatelessWidget {
                     Stack(
                       alignment: Alignment.topRight,
                       children: [
-                        Container(
-                          height: 45.h,
-                          width: 45.w,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: AppTheme.white),
-                          child: Center(
-                              child: SvgPicture.asset(ImageConstants.myCard)),
+                        CustomInkTap(
+                          onPress: () => Get.toNamed(AppRoutes.myCardScreen),
+                          child: Container(
+                            height: 45.h,
+                            width: 45.w,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: AppTheme.white),
+                            child: Center(
+                                child: SvgPicture.asset(ImageConstants.myCard)),
+                          ),
                         ),
                         CircleAvatar(
                           radius: 8.r,
                           backgroundColor: AppTheme.dark,
                           child: Text(
-                            '11',
+                            checkoutController.currentIndex.toString(),
                             style: TextStyle(
                                 fontSize: 10.sp, color: AppTheme.white),
                           ),
@@ -138,59 +143,64 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 25.h),
                 //Tabbar
-                SizedBox(
-                  height: 50.w,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: TabbarModel.tabList.length,
-                    itemBuilder: (context, index) => Obx(() {
-                      bool isSelect =
-                          tabBarController.currentPage.value == index;
-                      final itemTab = TabbarModel.tabList[index];
-                      return GestureDetector(
-                        onTap: () => tabBarController.changeTab(index),
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 8.w),
-                          padding: isSelect
-                              ? EdgeInsets.symmetric(
-                                  horizontal: 6.w, vertical: 7.h)
-                              : EdgeInsets.symmetric(horizontal: 2.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(35),
-                            color:
-                                isSelect ? theme.primaryColor : AppTheme.white,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CircleAvatar(
-                                  backgroundColor: AppTheme.white,
-                                  radius: 25,
-                                  child: SvgPicture.asset(itemTab.image)),
-                              if (isSelect) ...[
-                                SizedBox(width: 8.w),
-                                Text(itemTab.title,
-                                    style: theme.textTheme.titleSmall),
-                                SizedBox(width: 8.w),
+                DefaultTabController(
+                  length: TabbarModel.tabList.length,
+                  child: SizedBox(
+                    height: 50.w,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: TabbarModel.tabList.length,
+                      itemBuilder: (context, index) => Obx(() {
+                        bool isSelect =
+                            dashboardController.currentPage.value == index;
+                        final itemTab = TabbarModel.tabList[index];
+                        return GestureDetector(
+                          onTap: () => dashboardController.changeTab(index),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 8.w),
+                            padding: isSelect
+                                ? EdgeInsets.symmetric(
+                                    horizontal: 6.w, vertical: 7.h)
+                                : EdgeInsets.symmetric(horizontal: 2.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(35),
+                              color: isSelect
+                                  ? theme.primaryColor
+                                  : AppTheme.white,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircleAvatar(
+                                    backgroundColor: AppTheme.white,
+                                    radius: 25,
+                                    child: SvgPicture.asset(itemTab.image)),
+                                if (isSelect) ...[
+                                  SizedBox(width: 8.w),
+                                  Text(itemTab.title,
+                                      style: theme.textTheme.titleSmall),
+                                  SizedBox(width: 8.w),
+                                ],
                               ],
-                            ],
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                   ),
                 ),
+
                 Expanded(
-                  child: PageView.builder(
-                    onPageChanged: tabBarController.changeTab,
-                    controller: tabBarController.pageController,
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      return items[index];
-                    },
-                  ),
-                ),
+                    child: TabBarView(
+                        controller: dashboardController.tabController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: List.generate(
+                          items.length,
+                          (index) {
+                            return items[index];
+                          },
+                        )))
               ],
             ),
           )),

@@ -11,12 +11,12 @@ import 'package:get/get.dart';
 import '../controller/dashboard_controller.dart';
 
 class Dashboard extends StatelessWidget {
-  final DashboardController navController = Get.put(DashboardController());
+  final DashboardController dashboardController = Get.find();
   final List<Widget> screens = [
     HomeScreen(),
     FavouriteScreen(),
     const NotifyScreen(),
-    ProfileScreen(),
+    const ProfileScreen(),
   ];
 
   Dashboard({super.key});
@@ -26,7 +26,7 @@ class Dashboard extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       body: Obx(() => IndexedStack(
-            index: navController.selectIndex.value,
+            index: dashboardController.selectIndex.value,
             children: screens,
           )),
       bottomNavigationBar: Obx(() => NavigationBar(
@@ -34,15 +34,15 @@ class Dashboard extends StatelessWidget {
               labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
               backgroundColor: AppTheme.white,
               indicatorColor: AppTheme.lightGrey,
-              selectedIndex: navController.selectIndex.value,
+              selectedIndex: dashboardController.selectIndex.value,
               onDestinationSelected: (value) =>
-                  navController.changeIndex(value),
+                  dashboardController.changeIndex(value),
               destinations: [
                 NavigationDestination(
                     icon: SvgPicture.asset(
                       ImageConstants.home,
                       colorFilter: ColorFilter.mode(
-                        navController.selectIndex.value == 0
+                        dashboardController.selectIndex.value == 0
                             ? theme.primaryColor
                             : AppTheme.grey,
                         BlendMode.srcIn,
@@ -53,7 +53,7 @@ class Dashboard extends StatelessWidget {
                     icon: SvgPicture.asset(
                       ImageConstants.like,
                       colorFilter: ColorFilter.mode(
-                        navController.selectIndex.value == 1
+                        dashboardController.selectIndex.value == 1
                             ? theme.primaryColor
                             : AppTheme.grey,
                         BlendMode.srcIn,
@@ -64,7 +64,7 @@ class Dashboard extends StatelessWidget {
                     icon: SvgPicture.asset(
                       ImageConstants.notify,
                       colorFilter: ColorFilter.mode(
-                        navController.selectIndex.value == 2
+                        dashboardController.selectIndex.value == 2
                             ? theme.primaryColor
                             : AppTheme.grey,
                         BlendMode.srcIn,
@@ -75,7 +75,7 @@ class Dashboard extends StatelessWidget {
                     icon: SvgPicture.asset(
                       ImageConstants.user,
                       colorFilter: ColorFilter.mode(
-                        navController.selectIndex.value == 3
+                        dashboardController.selectIndex.value == 3
                             ? theme.primaryColor
                             : AppTheme.grey,
                         BlendMode.srcIn,

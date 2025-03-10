@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../../controller/homecontroller.dart';
+import '../../../controller/dashboard_controller.dart';
 import '../../../model/home_model/sidebar_model.dart';
 import '../../../utils/helper/button.dart';
 
@@ -23,7 +23,7 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AwesomeDrawerBar(
       type: StyleState.scaleRotate,
-      controller: Get.find<DrawerControllerX>().drawerController,
+      controller: Get.find<DashboardController>().drawerController,
       menuScreen: const MenuScreen(),
       mainScreen: child,
       borderRadius: 28.0,
@@ -40,7 +40,6 @@ class Sidebar extends StatelessWidget {
 }
 
 class MenuScreen extends StatefulWidget {
-
   const MenuScreen({super.key});
 
   @override
@@ -49,7 +48,6 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   @override
-
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
@@ -62,8 +60,10 @@ class _MenuScreenState extends State<MenuScreen> {
               spacing: 7,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(
-                  radius: 35,
+                CircleAvatar(
+                  radius: 35.r,
+                  backgroundImage:
+                      const AssetImage(ImageConstants.profileImage),
                 ),
                 Text('Hey, 👋', style: theme.textTheme.labelSmall),
                 Text('Alisson Beckeor', style: theme.textTheme.titleMedium),
@@ -118,64 +118,60 @@ class _MenuScreenState extends State<MenuScreen> {
 
   Future<dynamic> dialogLogout(ThemeData theme) {
     return Get.dialog(
-                    barrierDismissible: false,
-                    Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(15.r), // Rounded corners
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        width: 250, // Set custom width
-                        height: 130, // Set custom height
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 10,
-                          children: [
-                            FadeInDown(
-                              duration: const Duration(milliseconds: 200),
-                              child: Text(
-                                'Are you sure you want \nto Log out?',
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.headlineSmall,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
-                              children: [
-                                FadeInUp(
-                                    duration:
-                                        const Duration(milliseconds: 200),
-                                    child: CustomButton(
-                                      name: 'Cancel',
-                                      onPressButton: () => Get.back(),
-                                      width: 80,
-                                      height: 30,
-                                      color: AppTheme.grey,
-                                    )),
-                                FadeInUp(
-                                  duration: const Duration(milliseconds: 200),
-                                  child: CustomButton(
-                                    name: 'Log out',
-                                    onPressButton: () => Get.offAllNamed(
-                                        AppRoutes.phoneAuthScreen),
-                                    width: 80,
-                                    height: 30,
-                                    color: AppTheme.dark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+      barrierDismissible: false,
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.r), // Rounded corners
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          width: 250, // Set custom width
+          height: 130, // Set custom height
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 10,
+            children: [
+              FadeInDown(
+                duration: const Duration(milliseconds: 200),
+                child: Text(
+                  'Are you sure you want \nto Log out?',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineSmall,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FadeInUp(
+                      duration: const Duration(milliseconds: 200),
+                      child: CustomButton(
+                        name: 'Cancel',
+                        onPressButton: () => Get.back(),
+                        width: 80,
+                        height: 30,
+                        color: AppTheme.grey,
+                      )),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 200),
+                    child: CustomButton(
+                      name: 'Log out',
+                      onPressButton: () =>
+                          Get.offAllNamed(AppRoutes.phoneAuthScreen),
+                      width: 80,
+                      height: 30,
+                      color: AppTheme.dark,
                     ),
-                  );
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
-  
 }

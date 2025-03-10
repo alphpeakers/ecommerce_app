@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../controller/homecontroller.dart';
+import '../../controller/dashboard_controller.dart';
 import '../Appcolor/app_theme.dart';
 import 'inkwel.dart';
 
 class CustomAppbar extends StatelessWidget {
-  final DrawerControllerX drawerController = Get.find();
+  final DashboardController dashboardController = Get.find();
 
   final void Function()? onTab;
   final String? text;

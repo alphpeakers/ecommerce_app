@@ -11,7 +11,7 @@ void showPaymentSuccessDialog(
   final theme = Theme.of(context);
   Get.defaultDialog(
     backgroundColor: theme.scaffoldBackgroundColor,
-    barrierDismissible: true,
+    barrierDismissible: false,
     title: "",
     content: Column(
       spacing: 20,

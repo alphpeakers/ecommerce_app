@@ -57,19 +57,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             spacing: 5,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   CircleAvatar(
-                                    radius: 50,
+                                    radius: 40.r,
+                                    backgroundImage: const AssetImage(
+                                        ImageConstants.profileImage),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 15.h),
-                              const Row(
+                              SizedBox(height: 5.h),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Allison Becker'),
+                                  Text(
+                                    'Allison Becker',
+                                    style: theme.textTheme.headlineSmall,
+                                  ),
                                 ],
                               ),
                               Text('Full Name',

@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:oxyboots/controller/favoritecontroller.dart';
+import 'package:oxyboots/controller/product_controller.dart';
 import 'package:oxyboots/utils/helper/appbar.dart';
 import 'package:oxyboots/utils/helper/inkwel.dart';
 import 'package:oxyboots/utils/image_constants.dart';
@@ -7,16 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../controller/dashboard_controller.dart';
 import '../../routes/app_pages.dart';
 import '../../utils/Appcolor/app_theme.dart';
 import '../../utils/helper/button.dart';
 import 'widget/bottom_sheet.dart';
 
 class MycardScreen extends StatelessWidget {
-  final CurrencyFormatter currencyController = Get.find();
   final CheckoutController checkoutController = Get.find();
-  // final CheckoutController checkoutController = Get.put(CheckoutController());
   MycardScreen({super.key});
 
   @override
@@ -98,7 +95,7 @@ class MycardScreen extends StatelessWidget {
                                                   ),
                                                   SizedBox(height: 5.h),
                                                   Text(
-                                                    currencyController
+                                                    checkoutController
                                                         .formatPrice(
                                                             double.parse(
                                                                 data.price)),

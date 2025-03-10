@@ -9,6 +9,7 @@ class ImageConstants {
   static const arrowForward = 'assets/icons/back (1).png';
   static const loginImage = 'assets/images/Onboarding.png';
   static const splashImage = 'assets/images/Onboard-1.png';
+  static const profileImage = 'assets/images/8617838.png';
   //icons
   static const menu = 'assets/icons/Group 26.svg';
   static const location = 'assets/icons/combo shape.svg';

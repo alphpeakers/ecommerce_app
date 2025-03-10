@@ -1,15 +1,16 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/services.dart';
 import 'package:oxyboots/model/onboarding_model.dart/onboard_content.dart';
 import 'package:oxyboots/utils/helper/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../controller/onboarding.dart';
+import '../../controller/onboarding_controller.dart';
 import '../../utils/Appcolor/app_theme.dart';
 
 class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({super.key});
-  final OnboardingController controller = Get.put(OnboardingController());
+  final OnboardingController onboardingController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +19,18 @@ class OnboardingScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarColor: Colors.transparent,
+        ),
         elevation: 0,
-        toolbarHeight: 0,
       ),
       body: PageView.builder(
         itemCount: OnboardContentModel.onboardList.length,
-        onPageChanged: controller.updatePageIndicator,
+        onPageChanged: onboardingController.updatePageIndicator,
         physics: const NeverScrollableScrollPhysics(),
-        controller: controller.pageController,
+        controller: onboardingController.pageController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final itemList = OnboardContentModel.onboardList[index];
@@ -65,7 +70,8 @@ class OnboardingScreen extends StatelessWidget {
                       children: [
                         ...List.generate(OnboardContentModel.onboardList.length,
                             (index) {
-                          bool isActive = controller.currentPage.value == index;
+                          bool isActive =
+                              onboardingController.currentPage.value == index;
                           return Container(
                             width: isActive ? 42.w : 12.w,
                             height: 6.h,
@@ -83,7 +89,8 @@ class OnboardingScreen extends StatelessWidget {
                           child: CustomButton(
                             color: theme.primaryColor,
                             name: itemList.name,
-                            onPressButton: () => controller.changePage(index),
+                            onPressButton: () =>
+                                onboardingController.changePage(index),
                             width: 185,
                             height: 55,
                           ),
